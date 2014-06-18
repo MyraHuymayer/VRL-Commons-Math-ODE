@@ -21,7 +21,9 @@ public class HHPluginConfigurator extends VPluginConfigurator{
         setIdentifier(new PluginIdentifier("HodkinHuxley-Plugin01","0.1"));
         
         //description of the plugin
-        setDescription("Plugin, that implements the differential equations of the Hodgkin Huxley model and returns dem in an array with the following form: [V,n,m,h]. The parameters for the model can be changed by the user");
+        setDescription("Plugin, that implements the differential equations of the Hodgkin Huxley model<br>"
+                + "and returns them in an array with the following form: [V,n,m,h].<br>"
+                + "The parameters for the model can be changed by the user.");
         
         //copyright info
         setCopyrightInfo("Hodgkin Huxley Plugin",
