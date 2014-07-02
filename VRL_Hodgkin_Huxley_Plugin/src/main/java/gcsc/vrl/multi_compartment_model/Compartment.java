@@ -5,7 +5,7 @@
 package gcsc.vrl.multi_compartment_model;
 
 import java.util.ArrayList;
-import gcsc.vrl.hodgkin_huxley_plugin.*;
+//import gcsc.vrl.hodgkin_huxley_plugin.*;
 
 /**
  *
@@ -16,8 +16,24 @@ public class Compartment {
     /**
      * total number of compartments created 
      */
-    private static int totalNumber= 0; 
+    private static int totalNumber = 0; 
    
+    /**
+     * number to identify the compartment
+     */
+    private int id; 
+    
+    /**
+     * number of neighbors
+     */
+    private int number;
+    
+    /**
+     * all compartments that are coupled to instantiated compartment are listed here
+     */
+    private ArrayList<Compartment> dependencies; 
+
+    
     /**
      * length of the compartment  
      */
@@ -29,41 +45,37 @@ public class Compartment {
     private double radius; 
     
     /**
-     * 
+     * intracellular resistivity 
      */
     private double r_L; 
     
+//these two variables are most probably not necessary:
+//###############################################################################################################################
     /**
      * current injected into the compartment 
      */
     private double ie; 
     
     /**
-     * membrane current of the compartment, which is calculated using the Hodgkin Huxley plugin (or in another way!)
+     * membrane current of the compartment, which is calculated using the Hodgkin Huxley Plug-in (or in another way!)
      */
-    private double im; 
+    private double im;
+//###############################################################################################################################
     
     /**
      * membrane voltage of this compartment  
      */
     // each compartment only knows its own voltage, but it can access the voltage from its neighbor
+    //BRAUCHEN WIR UEBERHAUPT V?
     private double v; 
     
     /**
-     * intercompartmental conductances
+     * inter-compartmental conductances
      */
+    //number of inter-compartmental conductances depends on number of neighbors
     private double[] g; 
 
-    /**
-     * number to identify the compartment
-     */
-    private int id; 
     
-    /**
-     * all compartments that are coupled to instanciated compartment are listed here
-     */
-    private ArrayList<Compartment> dependencies; 
-
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     /** 
      * Constructor 
@@ -83,20 +95,18 @@ public class Compartment {
     }
     
     /**
-     * Compartments coupled to the instanciated compartment are added to a list of compartments in order to establish relationship between coupled compartments.
+     * Compartments coupled to the instantiated compartment are added to a list of compartments in order to establish relationship between coupled compartments.
      * @param c 
      */
     public void link(Compartment c){
         
     }
     
-//    /**
-//     * 
-//     */
-//    public void calculateim(ImFunction im){
-//        //um den membran strom zu berechnen, brauchen wir die daten aus Hodgkin und Huxley
-//   
-//    }
+    public void calculateConductance(){
+        // g_(u,u') = (a_u * a_u')/(r_L * L_u * (L_u*(a_u')^2 + L_u'*(a_u)^2 ))
+        
+    }
+
     
 
     
