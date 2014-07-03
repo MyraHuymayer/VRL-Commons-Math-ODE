@@ -11,10 +11,7 @@ package gcsc.vrl.multi_compartment_model;
 public class Main {
     
     public static void main(String [] args){
-        //Erstelle Instanz von Compartment
-        // add instance to ArrayList
-        // print list! 
-        
-        System.out.println();
+
+//        System.out.println();
     }
 }

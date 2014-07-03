@@ -22,7 +22,7 @@ public class Compartment {
     /**
      * number to identify the compartment
      */
-    private int id; 
+    private final int id; 
     
     /**
      * number of neighbors
@@ -33,11 +33,7 @@ public class Compartment {
      * all compartments that are coupled to instantiated compartment are listed here
      */
     private ArrayList<Compartment> dependencies;
-    
-    private ArrayList<Compartment> all; 
-    
-    private ConnectivityMatrix edgematrix;
- 
+     
     
     /**
      * length of the compartment  
@@ -63,7 +59,8 @@ public class Compartment {
     
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     /** 
-     * Constructor
+     * Constructor, creates a compartment with an identity number and contains a counter for created compartments
+     * @param i id for the compartment
      */
     public Compartment(int i) {
         totalNumber++;
@@ -117,34 +114,23 @@ public class Compartment {
         return dependencies;
     }
 
-    public ArrayList<Compartment> getAll() {
-        return all;
-    }
-
-    public ConnectivityMatrix getEdgematrix() {
-        return edgematrix;
-    }
-
     public void setDependencies(ArrayList<Compartment> dependencies) {
         this.dependencies = dependencies;
     }
-
-    public void setAll(ArrayList<Compartment> all) {
-        this.all = all;
-    }
-
-    public void setEdgematrix(ConnectivityMatrix edgematrix) {
-        this.edgematrix = edgematrix;
-    }
-      
-    /*-----------------------------*/
-    
+ 
     /**
      * Compartments coupled to the instantiated compartment are added to a list of compartments in order to establish relationship between coupled compartments.
-     * @param c 
+     * @param e 
      */
-    public void link(Compartment c){
+    //mal schauen ob das so klappt! und wie ich das dann anwende! evtl reicht halt doch die konnektivitaetsmatrix
+    public void link(Edge e){
+        Compartment target = e.first(); //target never used?? look if that is so.. 
         
+        if(e.first() == this){
+            target = e.second();
+            dependencies.add(target);
+            
+        }        
     }
     
     /**

@@ -13,18 +13,33 @@ package gcsc.vrl.multi_compartment_model;
 public class Edge {
 
     
-    private Compartment node1; 
-    private Compartment node2; 
+    private Compartment[] edge = new Compartment[2];
+//    private Compartment node1; 
+//    private Compartment node2; 
 
-    public Edge() {
+    public Edge(int i, int j) {
+       edge[0] = new Compartment(i);
+       edge[1] = new Compartment(j);
     }
     
    
-    //prinzipiell koennte man das auch nur in den Konstruktor schreiben! 
-    public void createEdge(int i, int j) {
-        node1 = new Compartment(i); 
-        node2 = new Compartment(j);
-        
-    }  
+//prinzipiell koennte man das auch nur in den Konstruktor schreiben! 
+//    public void createEdge(int i, int j) {
+//        
+//       edge[0] = new Compartment(i);
+//       edge[1] = new Compartment(j);
+//
+//       
+//    }  
+    
+    public Compartment first(){
+      Compartment first = edge[0];
+      return first;
+    }
+    
+    public Compartment second(){
+      Compartment second = edge[1];
+      return second; 
+    }
     
 }
