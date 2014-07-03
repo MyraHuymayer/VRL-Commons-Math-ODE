@@ -12,18 +12,18 @@ package gcsc.vrl.multi_compartment_model;
  */
 public class Edge {
 
-    /*
-        Der Sinn dieser Klasse ist die Darstellung eines Tupels (das sind dann die beiden 
-        Nodes die verbunden eine Edge ergeben)
-    */
     
-    /**
-     * Tuple with two integers which represent the compartment id's 
-     */
-    //geht das wirklich so? 
-    final private int[] edge = new int[2]; //MACHT SO WAHRSCHEINLICH NICHT SINN! 
-    
+    private Compartment node1; 
+    private Compartment node2; 
+
     public Edge() {
+    }
+    
+   
+    //prinzipiell koennte man das auch nur in den Konstruktor schreiben! 
+    public void createEdge(int i, int j) {
+        node1 = new Compartment(i); 
+        node2 = new Compartment(j);
         
     }  
     

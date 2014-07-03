@@ -101,6 +101,7 @@ public class MCVFunction2D implements Function2D{
     @Override
     public Double run(Double x, Double y){
         
+        //C_m * dV/dt = -i_m + I_e + sum(g_u,u' * V_u' - v_u)
         Double mcvfct;
         double tmp = 0;
         for(int i = 0; i < num; i++){
