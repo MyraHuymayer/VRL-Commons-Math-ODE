@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gcsc.vrl.multi_compartment_model;
 
 //import java.util.ArrayList;
@@ -60,16 +56,12 @@ public class Compartment {
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     /** 
      * Constructor, creates a compartment with an identity number and contains a counter for created compartments
-     * @param i id for the compartment
+     * @param id id for the compartment
      */
-    public Compartment(int i) {
+    public Compartment(int id) {
         totalNumber++;
-        id = i; 
+        this.id = id; 
     }    
-    
-//    public void setId(int id){
-//        this.id = id; 
-//    }
     
     public int getId(){
         return id;
@@ -96,15 +88,20 @@ public class Compartment {
         this.number = number;
     }
 
-    public void setLength(double length) {
+//    public void setLength(double length) {
+//        this.length = length;
+//    }
+//
+//    public void setRadius(double radius) {
+//        this.radius = radius;
+//    }
+//
+//    public void setR_L(double r_L) {
+//        this.r_L = r_L;
+//    }
+    public void init(double length, double radius, double r_L){
         this.length = length;
-    }
-
-    public void setRadius(double radius) {
         this.radius = radius;
-    }
-
-    public void setR_L(double r_L) {
         this.r_L = r_L;
     }
     
@@ -148,7 +145,7 @@ public class Compartment {
             double denominator = r_L * length * (length * Math.pow(dependencies.get(i).getRadius(), 2) + dependencies.get(i).getLength() * Math.pow(radius, 2) );
             g[i] = numerator/denominator; 
         }
-        //TODO: eventuell nochmal Gedanken drueber machen, ob hier was schief gehen kann (was eventuell in einer Exception muenden wuerde?)
+       
     }
 
     

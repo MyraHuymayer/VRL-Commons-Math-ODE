@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gcsc.vrl.multi_compartment_model;
 
 import eu.mihosoft.vrl.math.*;
@@ -41,6 +37,8 @@ public class MCVFunction2D implements Function2D{
      * membrane current of compartment
      */
     private double im; 
+    
+    private double cm = 1.0;
      
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -74,6 +72,14 @@ public class MCVFunction2D implements Function2D{
         return im;
     }
 
+    public double getCm() {
+        return cm;
+    }
+
+    public void setCm(double cm) {
+        this.cm = cm;
+    }
+
     public void setNum(int num) {
         this.num = num;
     }
@@ -96,7 +102,7 @@ public class MCVFunction2D implements Function2D{
      * running the function
      * @param x
      * @param y
-     * @return 
+     * @return solution
      */
     @Override
     public Double run(Double x, Double y){
@@ -111,7 +117,7 @@ public class MCVFunction2D implements Function2D{
         
         ie = ie/a_u;
         
-        mcvfct = -im + ie + tmp;
+        mcvfct = (-im + ie + tmp)/cm;
         return mcvfct; 
     }
     
