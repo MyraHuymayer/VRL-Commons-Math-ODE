@@ -8,8 +8,7 @@ public class Edge {
 
     
     private final Compartment[] edge = new Compartment[2];
-//    private Compartment node1; 
-//    private Compartment node2; 
+
 
     public Edge(int i, int j) {
        edge[0] = new Compartment(i);
