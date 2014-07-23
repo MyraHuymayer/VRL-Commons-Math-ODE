@@ -20,8 +20,8 @@ public class ConnectivityMatrix {
         
         //the initial connectivity matrix is a nodes X nodes matrix, filled with 0.0 
         for(int i = 0; i< nodes; i++){
-            for(int j = 0; i< nodes; i++){
-                if(i==j){
+            for(int j = 0; j< nodes; j++){
+                if(i==j ){
                     connectivityMatrix[i][j] = 1.0; 
                 }else{
                     connectivityMatrix[i][j] = 0.0;
@@ -41,6 +41,10 @@ public class ConnectivityMatrix {
             connectivityMatrix[j][i] = 1.0;
         }
     }
+
+//    public double[][] getConnectivityMatrix() {
+//        return connectivityMatrix;
+//    }
     
     /**
      * If a wrong entry was added, it can be deleted with this method. 
@@ -55,6 +59,10 @@ public class ConnectivityMatrix {
         }
     }
     
+    public double getEntry(int i, int j){
+        
+        return connectivityMatrix[i][j];
+    }
     
     
 //    public double isEntry(int i, int j){

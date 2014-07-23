@@ -9,6 +9,7 @@ package gcsc.vrl.hodgkin_huxley_plugin;
  * @author myra
  */
 public class Main {
+
     
     /**
      * @param args the command line arguments
@@ -19,3 +20,5 @@ public class Main {
     }
     
 }
+
+
