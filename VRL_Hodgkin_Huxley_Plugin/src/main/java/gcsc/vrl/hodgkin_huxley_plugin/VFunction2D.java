@@ -86,8 +86,7 @@ public class VFunction2D implements Function2D, Serializable{
      * @param gBarNa maximal conductance of sodium
      * @param eNa equilibrium potential of sodium
      * @param gBarL maximal leakage-conductance
-     * @param eL equilibrium potential of leakage current
-     * @param i externally injected current 
+     * @param eL equilibrium potential of leakage current 
      * @param cm membrane capacitance 
      */
     public void init(

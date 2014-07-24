@@ -90,7 +90,14 @@ public class MCVFunction {
         return 1-b_u;
     }
     
-//    public double calculateAij(){
-
-//    }
+    public double calculateAij(int i, int j, double timestep){
+        //what is a_ij? 
+        double a_ij = 0;
+        return a_ij;
+    }
+    
+    public double calculateDi(){
+        double d_u = 0 ;
+        return d_u;
+    }
 }

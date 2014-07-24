@@ -42,8 +42,11 @@ public class ODESolver implements Serializable {
      * @param relTol relative tolerance
      * @param rhs differential equations that need to be solved in an array
      * [V,n,m,h]
+     * @param ifct
      * @return array of Trajectories containing the time points and the
      * interpolated states of n,m and h
+     * @throws gcsc.vrl.hodgkin_huxley_plugin.InitialCurrentException
+     * @throws gcsc.vrl.hodgkin_huxley_plugin.FinalCurrentException
      */
     @OutputInfo(style = "multi-out",
     elemTypes = {Trajectory.class, Trajectory.class, Trajectory.class, Trajectory.class},
