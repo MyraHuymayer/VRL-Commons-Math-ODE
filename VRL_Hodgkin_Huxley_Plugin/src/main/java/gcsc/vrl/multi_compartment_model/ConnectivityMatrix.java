@@ -8,6 +8,7 @@ public class ConnectivityMatrix {
     
     double connectivityMatrix[][];
     int nodes; 
+    Edge e = new Edge();
 
     /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     /**
@@ -39,6 +40,7 @@ public class ConnectivityMatrix {
         if(i >= 0 && i < nodes && j >= 0 && j< nodes){
             connectivityMatrix[i][j] = 1.0; 
             connectivityMatrix[j][i] = 1.0;
+  
         }
     }
 

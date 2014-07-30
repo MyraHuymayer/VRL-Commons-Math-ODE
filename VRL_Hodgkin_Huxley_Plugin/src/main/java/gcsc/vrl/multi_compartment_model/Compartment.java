@@ -51,6 +51,7 @@ public class Compartment {
      * inter-compartmental conductances
      */
     private double[] g; 
+    
 
     
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
@@ -147,9 +148,10 @@ public class Compartment {
         }
        
     }
-
     
-
+    public boolean compartmentExists(int i){
+        return i == id; 
+    }
     
     
 }

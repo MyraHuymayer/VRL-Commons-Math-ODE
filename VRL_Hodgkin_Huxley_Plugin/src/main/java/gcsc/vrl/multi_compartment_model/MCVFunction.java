@@ -23,7 +23,7 @@ public class MCVFunction {
     /**
      * inter-compartmental conductance
      */
-    final private double[] g = new double[num];
+    private double[] g;//= new double[num] //matrix noch nicht gesetzt, deshalb meckert er !
     
     /**
      * Maximal membrane conductance of sodium 
@@ -62,12 +62,29 @@ public class MCVFunction {
     /**
      * membrane conductance [in uF/mm^2]
      */
-    private double cm = 1.0;
+    private final double cm = 1.0;
 
+    double timestep;
     /*-----------------------------------------------------------------------------------------------------------------------------------*/
     public MCVFunction() {
         
     }
+    
+    public void setG(double[] g){
+        this.g = g;
+    }
+
+     public void setTimestep(double timestep) {
+        this.timestep = timestep;
+    }
+     
+    public double getTimestep() {
+        return timestep;
+    }
+
+   
+    
+    
     /*
     * WE need three solutions that will be multiplicated with Vu or Vu' respectively
     * The general solution has the form: del V_u(1-b_u) - sum(a_uu' * del Vu') = d_u 
@@ -77,7 +94,7 @@ public class MCVFunction {
     */
     
     // b_u = 1/cm * (g_Na + g_K + g_L + sum(g_uu')) * z Del t 
-    public double calculateBi(double timestep){
+    public double calculateBi(){
         
         double g_intercomp = 0.0;
         for(int i = 0; i < num; i++){
@@ -90,14 +107,47 @@ public class MCVFunction {
         return 1-b_u;
     }
     
-    public double calculateAij(int i, int j, double timestep){
+    //TODO: die richtige Reihenfolge der Leitfaehigkeiten muss sichergestellt werden!!! 
+    /**
+     * 
+     * @param j the column or respectively the id of the neighboring compartment
+     * @return value of the neighboring conductance
+     */
+    public double calculateAij(int j){
         //what is a_ij? 
-        double a_ij = 0;
+        double a_ij = g[j]; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
         return a_ij;
     }
     
-    public double calculateDi(){
-        double d_u = 0 ;
+    /**
+     * 
+     * @param currentVoltageNeighbor
+     * @param currentVoltageComp
+     * @return 
+     */
+    //d_u = 1/cm * (g_Na*E_Na + g_K*E_K + g_L*E_L + i_e/a_u + sum(g_uu' * V_u'(t)) + (g_Na + g_K + g_L + sum(g_uu'))* V_u(t)) * del t
+    public double calculateDi(double[] currentVoltageNeighbor, double currentVoltageComp){
+        //g_Na*E_Na + g_K*E_K + g_L*E_L + i_e/a_u
+        double hhge = gNa * eNa + gK * eK + gL*eL + ie/a_u;
+        //Die Logik dahinter stimmt so noch nicht !!
+        //sum(g_uu' * V_u'(t))
+        double sumNeighborCurrent = 0.0; 
+        for(int i = 0; i < currentVoltageNeighbor.length; i++){
+            sumNeighborCurrent = sumNeighborCurrent + g[i] * currentVoltageNeighbor[i];
+        
+        }
+        //Die Logik dahinter stimmt so noch nicht !!
+        //(g_Na + g_K + g_L + sum(g_uu'))* V_u(t)
+        double sumCompCurrent = gNa + gK + gL; 
+        for(int i = 0; i < num; i++){
+            sumCompCurrent = sumCompCurrent + g[i];
+        }
+        
+        sumCompCurrent = sumCompCurrent * currentVoltageComp; 
+       
+        double sum = hhge + sumNeighborCurrent + sumCompCurrent;
+       
+        double d_u = sum * timestep/cm  ;
         return d_u;
     }
 }
