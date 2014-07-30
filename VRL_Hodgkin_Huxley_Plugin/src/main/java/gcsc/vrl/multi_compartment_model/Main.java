@@ -25,5 +25,43 @@ public class Main {
             System.out.print("\n");
         }
 //        System.out.println();
-    }
+         //System.out.print("-----------------------------------------------------------------------------------------\n");
+        
+       // System.out.print("-----------------------------************************-----------------------------------\n");
+        
+        CModelCreator model = new CModelCreator(); 
+        Compartment[] test; 
+        model.createAllCompartments(a);
+        model.createAllEdges(a);
+       // model.setProperties(0.7, 0.345, 1.23442);
+        test = model.getAllCompartments();
+        
+        for(int i = 0; i<n; i++){
+            test[i].init(0.7, 0.345, 1.23442);
+            int id = test[i].getId();
+            double r_L = test[i].getR_L(); 
+            double length = test[i].getLength();
+            double radius = test[i].getRadius();
+            System.out.print("\n");
+            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+r_L+"\n " );
+            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
+            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
+            System.out.print("-------------------------------------------------------------------\n");
+            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
+            System.out.print("\n");
+            System.out.print("-------------------------------------------------------------------");
+        }
+       
+        
+//        //Compartment TEST
+//         int complength = 3;
+//        Compartment[] test2 = new Compartment[complength];
+//        System.out.print("Length of this Compartment Array= "+complength+"\n");
+//        for(int i = 0; i < complength; i++){
+//            test2[i] = new Compartment(i);
+//            System.out.print("test2= "+test2[i].getId()+"\n");
+//        }
+////         Compartment comp = new Compartment(3);
+////         System.out.print("Id of single compartment is = "+comp.getId()+"\n");
+    }    
 }

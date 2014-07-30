@@ -18,7 +18,7 @@ public class CModelCreator {
      */
     private int totalNumber;  
     private Compartment[] allCompartments;
-    private ArrayList<Edge> allEdges = new ArrayList(); 
+    private ArrayList<Edge> allEdges = new ArrayList<Edge>(); 
     
     /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
@@ -30,7 +30,8 @@ public class CModelCreator {
             for(int i = 0; i<totalNumber; i++){
                 for(int j = 0; j< totalNumber; j++){
                     if(i == j){
-                        allCompartments[k] = new Compartment(i);  
+                        allCompartments[k] = new Compartment(i); 
+                        
                     }
                 }
             }
@@ -58,6 +59,5 @@ public class CModelCreator {
     public ArrayList<Edge> getAllEdges() {
         return allEdges;
     }
-    
-    
+
 }

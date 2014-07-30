@@ -28,7 +28,7 @@ public class Compartment {
     /**
      * all compartments that are coupled to instantiated compartment are listed here
      */
-    private ArrayList<Compartment> dependencies;
+    private ArrayList<Compartment> dependencies = new ArrayList<Compartment>();
      
     
     /**
@@ -93,17 +93,19 @@ public class Compartment {
         this.number = number;
     }
 
-//    public void setLength(double length) {
-//        this.length = length;
-//    }
-//
-//    public void setRadius(double radius) {
-//        this.radius = radius;
-//    }
-//
-//    public void setR_L(double r_L) {
-//        this.r_L = r_L;
-//    }
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setR_L(double r_L) {
+        this.r_L = r_L;
+    }
+    
+    
     public void init(double length, double radius, double r_L){
         this.length = length;
         this.radius = radius;
@@ -152,10 +154,7 @@ public class Compartment {
         }
        
     }
-    
-    public boolean compartmentExists(int i){
-        return i == id; 
-    }
-    
+
+
     
 }
