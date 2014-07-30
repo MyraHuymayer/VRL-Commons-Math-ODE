@@ -13,7 +13,7 @@ public class Compartment {
     /**
      * total number of compartments created 
      */
-    private static int totalNumber = 0; 
+//    private int totalNumber; 
    
     /**
      * number to identify the compartment
@@ -60,18 +60,22 @@ public class Compartment {
      * @param id id for the compartment
      */
     public Compartment(int id) {
-        totalNumber++;
+   
         this.id = id; 
     }    
     
     public int getId(){
         return id;
     }
-
     
-    public static int getTotalNumber() {
-        return totalNumber;
-    }
+    //this is equal to the number of rows in the ConnectivityMatrix 
+//    public void setTotalNumber(int totalNumber){
+//        this.totalNumber = totalNumber; 
+//    }
+    
+//    public int getTotalNumber() {
+//        return totalNumber;
+//    }
 
     public double getLength() {
         return length;

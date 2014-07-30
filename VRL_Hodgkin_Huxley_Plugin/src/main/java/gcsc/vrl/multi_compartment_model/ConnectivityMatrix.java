@@ -8,9 +8,9 @@ public class ConnectivityMatrix {
     
     double connectivityMatrix[][];
     int nodes; 
-    Edge e = new Edge();
+   // Edge e = new Edge();
 
-    /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/    
     /**
      * Constructor: creates the initial matrix, whose elements on the main diagonal are equal to 1.0 and all other elements are equal to zero 
      * @param nodes number of compartments 
@@ -29,6 +29,11 @@ public class ConnectivityMatrix {
                 }
             }
         }
+    }
+    
+    
+    public int getNodes() {
+        return nodes;
     }
     
     /**
@@ -53,14 +58,19 @@ public class ConnectivityMatrix {
      * @param i node 1
      * @param j node 2
      */
-    //eventuell brauchen wir diese Klasse gar nicht 
+    //eventuell brauchen wir diese Methode gar nicht 
     public void deleteEntry(int i, int j){
         if(i >= 0 && i < nodes && j >= 0 && j< nodes){
             connectivityMatrix[i][j] = 0.0; 
             connectivityMatrix[j][i] = 0.0; 
         }
     }
-    
+    /**
+     * returns value at any position of the ConnectivityMatrix
+     * @param i row number 
+     * @param j column number 
+     * @return entry at position a_(ij)
+     */
     public double getEntry(int i, int j){
         
         return connectivityMatrix[i][j];

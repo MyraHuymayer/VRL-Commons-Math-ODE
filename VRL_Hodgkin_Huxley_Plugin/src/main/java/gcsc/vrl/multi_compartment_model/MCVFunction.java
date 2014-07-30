@@ -64,7 +64,8 @@ public class MCVFunction {
      */
     private final double cm = 1.0;
 
-    double timestep;
+    private double timestep;
+    private double z; 
     /*-----------------------------------------------------------------------------------------------------------------------------------*/
     public MCVFunction() {
         
@@ -103,7 +104,7 @@ public class MCVFunction {
         }
         // sollten wir b_u auch ausserhalb definieren oder reicht es auch hier drinnen? 
         double sumconductances = gNa + gK + gL + g_intercomp;
-        double b_u = sumconductances * timestep / cm;
+        double b_u = sumconductances * timestep * z / cm;
         return 1-b_u;
     }
     
@@ -115,7 +116,7 @@ public class MCVFunction {
      */
     public double calculateAij(int j){
         //what is a_ij? 
-        double a_ij = g[j]; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
+        double a_ij = z*g[j]; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
         return a_ij;
     }
     
