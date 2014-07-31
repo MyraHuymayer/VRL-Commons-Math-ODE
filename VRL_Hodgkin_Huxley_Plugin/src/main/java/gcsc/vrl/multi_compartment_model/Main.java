@@ -29,12 +29,12 @@ public class Main {
         
        // System.out.print("-----------------------------************************-----------------------------------\n");
         
-//        CModelCreator model = new CModelCreator(); 
-//        Compartment[] test; 
-////        ArrayList<Compartment> newtest= new ArrayList<Compartment>(); 
-//        model.createAllCompartments(a);
-//        model.createAllEdges(a);
-//        //newtest = model.getAllCompartments();
+        CModelCreator model = new CModelCreator(); 
+        Compartment[] test; 
+//        ArrayList<Compartment> newtest= new ArrayList<Compartment>(); 
+        model.createAllCompartments(a);
+        model.createAllEdges(a);
+        //newtest = model.getAllCompartments();
 //        
 ////        for(int i = 0; i < newtest.size(); i++){
 ////            newtest.get(i).init(0.7, 0.345, 1.23442);
@@ -53,24 +53,31 @@ public class Main {
 //
 //        
 //       // model.setProperties(0.7, 0.345, 1.23442);
-//        test = model.getAllCompartments();
-//        
-//        for(int i = 0; i<n; i++){
-//            test[i].init(0.7, 0.345, 1.23442);
-//            int id = test[i].getId();
-//            double r_L = test[i].getR_L(); 
-//            double length = test[i].getLength();
-//            double radius = test[i].getRadius();
-//            System.out.print("\n");
-//            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+r_L+"\n " );
-//            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
-//            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
-//            System.out.print("-------------------------------------------------------------------\n");
-//            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
-//            System.out.print("\n");
-//            System.out.print("-------------------------------------------------------------------");
-//        }
-//       
+        test = model.getAllCompartments();
+        
+        double k = 0.23456; 
+        for(int i = 0; i<n; i++){
+            test[i].init(k+i*5, 0.345, k-i*2);
+            int id = test[i].getId();
+            double r_L = test[i].getR_L(); 
+            double length = test[i].getLength();
+            double radius = test[i].getRadius();
+            System.out.print("\n");
+            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+r_L+"\n " );
+            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
+            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
+            System.out.print("-------------------------------------------------------------------\n");
+            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
+            System.out.print("\n");
+            System.out.print("-------------------------------------------------------------------");
+        }
+
+        /* TODO: For further testing: 
+         *      1. Teste, ob die Edges so funktionieren wie sie sollen
+         *      3. erstelle die Dependencies Liste!  
+         *      2. berechne die Conductances mit den Compartments/mit einem einzelnen Compartment 
+         *      
+         */
         
 //        //Compartment TEST
 //         int complength = 3;

@@ -121,14 +121,19 @@ public class Compartment {
     public void setDependencies(ArrayList<Compartment> dependencies) {
         this.dependencies = dependencies;
     }
+
+    public double[] getG() {
+        return g;
+    }
  
+    
     /**
      * Compartments coupled to the instantiated compartment are added to a list of compartments in order to establish relationship between coupled compartments.
      * @param e 
      */
-    //mal schauen ob das so klappt! und wie ich das dann anwende! evtl reicht halt doch die konnektivitaetsmatrix
+    //ein Compartment ueberprueft alle Edges -- fuer eine sehr grosse Konnektivitaetsmatrix braucht das aber voraussichtlich zu viel Rechenzeit 
     public void link(Edge e){
-        Compartment target = e.first(); //target never used?? look if that is so.. 
+        Compartment target = e.first();
         
         if(e.first() == this){
             target = e.second();
@@ -138,7 +143,8 @@ public class Compartment {
     }
     
     /**
-     * 
+     * Method to calculate the intercompartmental conductances for every neighboring compartment 
+     * @return array of intercompartmental conductances
      */
     public void calculateConductance(){
         
@@ -152,7 +158,6 @@ public class Compartment {
             double denominator = r_L * length * (length * Math.pow(dependencies.get(i).getRadius(), 2) + dependencies.get(i).getLength() * Math.pow(radius, 2) );
             g[i] = numerator/denominator; 
         }
-       
     }
 
 

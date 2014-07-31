@@ -27,13 +27,10 @@ public class CModelCreator {
         totalNumber = cmat.getNodes();
         allCompartments = new Compartment[totalNumber]; 
         
-        for(int k = 0; k < totalNumber; k++){
-            for(int i = 0; i<totalNumber; i++){
-                for(int j = 0; j< totalNumber; j++){
-                    if(i == j){
-                        allCompartments[k] = new Compartment(i); 
-                        
-                    }
+        for(int i = 0; i<totalNumber; i++){
+            for(int j = 0; j< totalNumber; j++){
+                if(i == j){
+                    allCompartments[i] = new Compartment(i);                     
                 }
             }
         }
@@ -79,6 +76,18 @@ public class CModelCreator {
         return allEdges;
     }
         
+    public void compartmentalParameters(){
+        for(int i = 0; i< totalNumber; i++){
+            for(int j = 0; j < allEdges.size(); j++){
+                allCompartments[i].link(allEdges.get(j));
+            }
+        }
+        
+        for(int i = 0; i < totalNumber; i++){
+            allCompartments[i].calculateConductance();
+        }
+        
+    }
 //    Ziemlich Nutzlos, da wir in COmpartment.java die Methode init() haben
 //    public void setProperties(double length, double rl, double radius){
 //        for(int i =0; i<totalNumber; i++){

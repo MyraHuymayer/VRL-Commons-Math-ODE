@@ -147,6 +147,30 @@ public class VFunction2D implements Function2D, Serializable{
     public double getH() {
         return h;
     }
+
+    public double getgBarK() {
+        return gBarK;
+    }
+
+    public double geteK() {
+        return eK;
+    }
+
+    public double getgBarNa() {
+        return gBarNa;
+    }
+
+    public double geteNa() {
+        return eNa;
+    }
+
+    public double getgBarL() {
+        return gBarL;
+    }
+
+    public double geteL() {
+        return eL;
+    }
     
     
     /**

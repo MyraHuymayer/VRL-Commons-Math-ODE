@@ -23,7 +23,7 @@ public class MCVFunction {
     /**
      * inter-compartmental conductance
      */
-    private double[] g;//= new double[num] //matrix noch nicht gesetzt, deshalb meckert er !
+    private double[] g;
     
     /**
      * Maximal membrane conductance of sodium 
