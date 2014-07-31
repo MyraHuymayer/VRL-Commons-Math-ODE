@@ -1,5 +1,5 @@
 package gcsc.vrl.multi_compartment_model;
-import java.util.*;
+//import java.util.*;
 /**
  *
  * @author myra
@@ -29,32 +29,32 @@ public class Main {
         
        // System.out.print("-----------------------------************************-----------------------------------\n");
         
-        CModelCreator model = new CModelCreator(); 
-        //Compartment[] test; 
-        ArrayList<Compartment> newtest= new ArrayList<Compartment>(); 
-        model.createAllCompartments(a);
-        //model.createAllEdges(a);
-        newtest = model.getAllCompartments();
-        
-        for(int i = 0; i < newtest.size(); i++){
-            newtest.get(i).init(0.7, 0.345, 1.23442);
-            int id = newtest.get(i).getId();
-            double restivity = newtest.get(i).getR_L(); 
-            double length = newtest.get(i).getLength();
-            double radius = newtest.get(i).getRadius(); 
-            System.out.print("-------------------------------------------------------------------\n");
-            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
-            System.out.print("-------------------------------------------------------------------");
-            System.out.print("\n");
-            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+restivity+"\n " );
-            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
-            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
-        }
-
-        
-       // model.setProperties(0.7, 0.345, 1.23442);
-        //test = model.getAllCompartments();
-        
+//        CModelCreator model = new CModelCreator(); 
+//        Compartment[] test; 
+////        ArrayList<Compartment> newtest= new ArrayList<Compartment>(); 
+//        model.createAllCompartments(a);
+//        model.createAllEdges(a);
+//        //newtest = model.getAllCompartments();
+//        
+////        for(int i = 0; i < newtest.size(); i++){
+////            newtest.get(i).init(0.7, 0.345, 1.23442);
+////            int id = newtest.get(i).getId();
+////            double restivity = newtest.get(i).getR_L(); 
+////            double length = newtest.get(i).getLength();
+////            double radius = newtest.get(i).getRadius(); 
+////            System.out.print("-------------------------------------------------------------------\n");
+////            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
+////            System.out.print("-------------------------------------------------------------------");
+////            System.out.print("\n");
+////            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+restivity+"\n " );
+////            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
+////            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
+////        }
+//
+//        
+//       // model.setProperties(0.7, 0.345, 1.23442);
+//        test = model.getAllCompartments();
+//        
 //        for(int i = 0; i<n; i++){
 //            test[i].init(0.7, 0.345, 1.23442);
 //            int id = test[i].getId();

@@ -17,58 +17,58 @@ public class CModelCreator {
      * the total number of compartments in the model 
      */
     private int totalNumber;  
-    private ArrayList<Compartment> allCompartments = new ArrayList<Compartment>(); 
-    //private Compartment[] allCompartments;
+    //private ArrayList<Compartment> allCompartments = new ArrayList<Compartment>(); 
+    private Compartment[] allCompartments;
     private ArrayList<Edge> allEdges = new ArrayList<Edge>(); 
     
     /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
-//    public void createAllCompartments(ConnectivityMatrix cmat){ 
-//        totalNumber = cmat.getNodes();
-////        allCompartments = new Compartment[totalNumber]; 
-//        
-//        for(int k = 0; k < totalNumber; k++){
-//            for(int i = 0; i<totalNumber; i++){
-//                for(int j = 0; j< totalNumber; j++){
-//                    if(i == j){
-////                        allCompartments[k] = new Compartment(i); 
-//                        
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-     public void createAllCompartments(ConnectivityMatrix cmat){ 
+    public void createAllCompartments(ConnectivityMatrix cmat){ 
         totalNumber = cmat.getNodes();
-//        allCompartments = new Compartment[totalNumber]; 
-        Compartment tmp; 
-        for(int i = 0; i<totalNumber; i++){
-            for(int j = 0; j< totalNumber; j++){
-                if(i == j){
-                    tmp = new Compartment(i); 
-                    allCompartments.add(tmp);                     
+        allCompartments = new Compartment[totalNumber]; 
+        
+        for(int k = 0; k < totalNumber; k++){
+            for(int i = 0; i<totalNumber; i++){
+                for(int j = 0; j< totalNumber; j++){
+                    if(i == j){
+                        allCompartments[k] = new Compartment(i); 
+                        
+                    }
                 }
             }
         }
-     }
-     
-     
-    public ArrayList<Compartment> getAllCompartments(){
-        return allCompartments; 
     }
-//    public Compartment[] getAllCompartments(){
+    
+//     public void createAllCompartments(ConnectivityMatrix cmat){ 
+//        totalNumber = cmat.getNodes();
+////        allCompartments = new Compartment[totalNumber]; 
+//        Compartment tmp; 
+//        for(int i = 0; i<totalNumber; i++){
+//            for(int j = 0; j< totalNumber; j++){
+//                if(i == j){
+//                    tmp = new Compartment(i); 
+//                    allCompartments.add(tmp);                     
+//                }
+//            }
+//        }
+//     }
+//     
+     
+//    public ArrayList<Compartment> getAllCompartments(){
 //        return allCompartments; 
 //    }
-//    
+    public Compartment[] getAllCompartments(){
+        return allCompartments; 
+    }
+    
     //TODO: throw Exeption if AllCompartments is empty??
     public void createAllEdges(ConnectivityMatrix cmat){
         Edge tmp = new Edge();
         for(int i = 0; i< totalNumber; i++){
             for(int j = 0; j<totalNumber; j++){
                 if(cmat.getEntry(i, j) == 1 && i != j){
-                   // tmp.setFirst(allCompartments[i]);
-                   // tmp.setSecond(allCompartments[j]); 
+                    tmp.setFirst(allCompartments[i]);
+                    tmp.setSecond(allCompartments[j]); 
                 }
             }
         }
