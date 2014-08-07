@@ -70,7 +70,7 @@ public class MCVFunction {
     public MCVFunction() {
         
     }
-    
+    //TODO: nochmal drueber nachdenken ob ich wirklich alle getter und setter brauche
     public void setG(double[] g){
         this.g = g;
     }
@@ -81,6 +81,96 @@ public class MCVFunction {
      
     public double getTimestep() {
         return timestep;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public double getgNa() {
+        return gNa;
+    }
+
+    public double getgK() {
+        return gK;
+    }
+
+    public double getgL() {
+        return gL;
+    }
+
+    public double geteNa() {
+        return eNa;
+    }
+
+    public double geteK() {
+        return eK;
+    }
+
+    public double geteL() {
+        return eL;
+    }
+
+    public double getIe() {
+        return ie;
+    }
+
+    public double getA_u() {
+        return a_u;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public double[] getG() {
+        return g;
+    }
+
+    public double getCm() {
+        return cm;
+    }
+    
+    
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setgNa(double gNa) {
+        this.gNa = gNa;
+    }
+
+    public void setgK(double gK) {
+        this.gK = gK;
+    }
+
+    public void setgL(double gL) {
+        this.gL = gL;
+    }
+
+    public void seteNa(double eNa) {
+        this.eNa = eNa;
+    }
+
+    public void seteK(double eK) {
+        this.eK = eK;
+    }
+
+    public void seteL(double eL) {
+        this.eL = eL;
+    }
+
+    public void setIe(double ie) {
+        this.ie = ie;
+    }
+
+    public void setA_u(double a_u) {
+        this.a_u = a_u;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
     }
 
    
@@ -109,6 +199,7 @@ public class MCVFunction {
     }
     
     //TODO: die richtige Reihenfolge der Leitfaehigkeiten muss sichergestellt werden!!! 
+    //Da sind auch generell noch Fehler drin!
     /**
      * 
      * @param j the column or respectively the id of the neighboring compartment
@@ -116,7 +207,7 @@ public class MCVFunction {
      */
     public double calculateAij(int j){
         //what is a_ij? 
-        double a_ij = z*g[j]; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
+        double a_ij = z*g[j]/cm; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
         return a_ij;
     }
     

@@ -58,6 +58,10 @@ public class CModelCreator {
         return allCompartments; 
     }
     
+    /**
+     * creates all edges subject to all compartments  
+     * @param cmat connectivity matrix
+     */
     //TODO: throw Exeption if AllCompartments is empty??
     public void createAllEdges(ConnectivityMatrix cmat){
         Edge tmp = new Edge();
@@ -75,7 +79,10 @@ public class CModelCreator {
     public ArrayList<Edge> getAllEdges() {
         return allEdges;
     }
-        
+    
+    /**
+     * sets the dependencies between all compartments 
+     */
     public void compartmentalParameters(){
         for(int i = 0; i< totalNumber; i++){
             for(int j = 0; j < allEdges.size(); j++){
