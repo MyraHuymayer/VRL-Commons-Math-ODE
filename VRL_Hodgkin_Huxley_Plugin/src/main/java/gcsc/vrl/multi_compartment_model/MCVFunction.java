@@ -27,8 +27,7 @@ public class MCVFunction {
     
     /**
      * Maximal membrane conductance of sodium 
-     */
-    //maybe it would also be better to keep this more general - if there are for example more than only the following conductances - perhaps also an array of conductances would be required here -- think about that later 
+     */ 
     //memo: gNa = gbarNa * m^3*h
     private double gNa;
     private double gK;
@@ -37,12 +36,6 @@ public class MCVFunction {
     private double eNa; 
     private double eK;
     private double eL;
-    
-//    not known to this function or is it? 
-//    /**
-//     * voltage of neighbor [in mV]
-//     */
-//    final private double[] v_neighbor = new double[num];
     
     /**
      * externally injected current [in uA]
@@ -53,11 +46,6 @@ public class MCVFunction {
      * area of compartment [in mm^2]
      */
     private double a_u; 
-    
-//    /**
-//     * membrane current of compartment
-//     */
-//    private double im; 
     
     /**
      * membrane conductance [in uF/mm^2]
@@ -184,12 +172,15 @@ public class MCVFunction {
     * d_u = 1/cm * (g_Na*E_Na + g_K*E_K + g_L*E_L + i_e/a_u + sum(g_uu' * V_u'(t)) + (g_Na + g_K + g_L + sum(g_uu'))* V_u(t)) * del t
     */
     
-    // b_u = 1/cm * (g_Na + g_K + g_L + sum(g_uu')) * z Del t 
+    /**
+     * calculate b_u:  b_u = 1/cm * (g_Na + g_K + g_L + sum(g_uu')) * z Del t 
+     * @return the value of b_u which is written into the matrix A, when index i == index j
+     */
+    // 
     public double calculateBi(){
         
         double g_intercomp = 0.0;
         for(int i = 0; i < num; i++){
-            //y is the voltage of the compartment, that is currently investigated
            g_intercomp = g_intercomp + g[i]; 
         }
         // sollten wir b_u auch ausserhalb definieren oder reicht es auch hier drinnen? 
@@ -201,13 +192,13 @@ public class MCVFunction {
     //TODO: die richtige Reihenfolge der Leitfaehigkeiten muss sichergestellt werden!!! 
     //Da sind auch generell noch Fehler drin!
     /**
-     * 
-     * @param j the column or respectively the id of the neighboring compartment
-     * @return value of the neighboring conductance
+     * Calculate a_(uu'): a_uu' = 1/cm * sum(g_uu'* z Del t)
+     * @param k index value of g[]
+     * @return value a_uu' which is written into matrix A at [i][j]
      */
-    public double calculateAij(int j){
-        //what is a_ij? 
-        double a_ij = z*g[j]/cm; //das bringt nicht besonders viel, da die Nachbarn vorraussichtlich nicht geordnet sind
+    public double calculateAij(int k){
+        
+        double a_ij = z*timestep*g[k]/cm; 
         return a_ij;
     }
     

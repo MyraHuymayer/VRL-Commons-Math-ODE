@@ -74,18 +74,27 @@ public class LSCreator {
        //gL = gBarL
        mcvf.setgL(vf.getgBarL());
        
-      
-       //mcvf.
+       double aijValue; 
+       
         
         for(int i = 0; i < matrixA.length; i++){
             for(int j = 0; j < matrixA.length; j++ ){
-                //TODO:so ganz stimmt das mit g[] noch nicht -- als naechstes waere es sinnvoll sich das ganz genau klar zu machen 
+                 
                 mcvf.setG(allcomp[i].getG());
+                
                 if(i==j){
-                    mcvf.calculateBi(); // nicht sicher ob das stimmt 
-                }
+                     
+                    matrixA[i][j] =  mcvf.calculateBi();
+                }//TODO: nochmal anschauen, was bei der berechnung von aij hier passiert - nicht sicher ob das so stimmt.
                 if(matrixA[i][j] == 1 && i != j){
-                    mcvf.calculateAij(j); //nicht sicher ob das stimmt 
+                    for(int k = 0; k < mcvf.getG().length; k ++){
+                        
+                        Compartment tmp = allcomp[i].getDependencies().get(k);
+                        
+                        if(tmp.getId() == j){
+                           matrixA[i][j] = mcvf.calculateAij(k);
+                       }
+                    }
                 }
             }
         }

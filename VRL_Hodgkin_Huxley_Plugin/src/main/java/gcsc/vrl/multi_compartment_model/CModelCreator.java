@@ -1,12 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gcsc.vrl.multi_compartment_model;
 
 import java.util.*;
 
-/**
+/** NOTE: Dieser CModelCreator bekommt definitiv keine GUI in der VRL, aufgrund der vielen Methoden/Functionen -- es ist noetig, dass die ConnectivityMatrix an den ModelCreator, der eine Repraesentation in der VRL 
+ * erhaelt, uebergeben wird!!!!
+ * 
+ * 
+ * 
  * The CModelCreator creates the morphology of the investigated neuron 
  * TODO: will receive a GUI in VRL - so we need to import eu.mihosoft.vrl.annotation.*; 
  * @author myra
@@ -20,11 +20,29 @@ public class CModelCreator {
     //private ArrayList<Compartment> allCompartments = new ArrayList<Compartment>(); 
     private Compartment[] allCompartments;
     private ArrayList<Edge> allEdges = new ArrayList<Edge>(); 
+    ConnectivityMatrix cmat; 
     
     /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    public void setCmat(ConnectivityMatrix cmat) {
+        this.cmat = cmat;
+    }
+
+    public ConnectivityMatrix getCmat() {
+        return cmat;
+    }
     
-    public void createAllCompartments(ConnectivityMatrix cmat){ 
+        
+    public void setTotalNumber(){
         totalNumber = cmat.getNodes();
+    }
+    
+    public int getTotalNumber(){
+        return totalNumber; 
+    }
+    
+    public void createAllCompartments(){ 
+        //totalNumber = cmat.getNodes();
         allCompartments = new Compartment[totalNumber]; 
         
         for(int i = 0; i<totalNumber; i++){
@@ -63,7 +81,8 @@ public class CModelCreator {
      * @param cmat connectivity matrix
      */
     //TODO: throw Exeption if AllCompartments is empty??
-    public void createAllEdges(ConnectivityMatrix cmat){
+    public void createAllEdges(){
+        //totalNumber = cmat.getNodes();
         Edge tmp = new Edge();
         for(int i = 0; i< totalNumber; i++){
             for(int j = 0; j<totalNumber; j++){
@@ -75,7 +94,7 @@ public class CModelCreator {
         }
         allEdges.add(tmp);
     }
-
+    
     public ArrayList<Edge> getAllEdges() {
         return allEdges;
     }

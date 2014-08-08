@@ -129,7 +129,7 @@ public class Compartment {
     
     /**
      * Compartments coupled to the instantiated compartment are added to a list of compartments in order to establish relationship between coupled compartments.
-     * @param e 
+     * @param e Edge consisting of two Compartments
      */
     //ein Compartment ueberprueft alle Edges -- fuer eine sehr grosse Konnektivitaetsmatrix braucht das aber voraussichtlich zu viel Rechenzeit 
     public void link(Edge e){
