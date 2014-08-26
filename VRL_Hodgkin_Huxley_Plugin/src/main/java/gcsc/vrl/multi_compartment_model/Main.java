@@ -1,5 +1,6 @@
 package gcsc.vrl.multi_compartment_model;
-//import java.util.*;
+import gcsc.vrl.hodgkin_huxley_plugin.*;
+import java.util.*;
 /**
  *
  * @author myra
@@ -7,12 +8,14 @@ package gcsc.vrl.multi_compartment_model;
 public class Main {
     
     public static void main(String [] args){
-//         Testing the connectivity matrix
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+//         Create the connectivity-Matrix
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
         int n = 4; 
         ConnectivityMatrix a = new ConnectivityMatrix(n); 
-        a.addEntry(0,1); // eigentlich waere das ja intuitiv bei (1,2), aber bei dem array faengt man ja bei 0 zu zaehlen an
+        a.addEntry(0,1); 
         a.addEntry(3, 2);
-        a.deleteEntry(3,2);
+     
         a.addEntry(1,2);
         a.addEntry(1,3);
 
@@ -24,81 +27,141 @@ public class Main {
             }
             System.out.print("\n");
         }
-//        System.out.println();
-         //System.out.print("-----------------------------------------------------------------------------------------\n");
+        System.out.println();
         
-        System.out.print("-----------------------------************************-----------------------------------\n");
-        System.out.print("This is matrix A = a copy of the connecitivity matrix\n");
-//        LSCreator ls = new LSCreator();
-//        double[][] mata = ls.copyMatrix(a);
-//        
-//         for(int i = 0; i<n; i++){
-//            for(int j = 0; j < n; j++){
-//                
-////                System.out.print(a+" ");
-//              System.out.print(mata[i][j] +" ");
-//            }
-//            System.out.print("\n");
-//        }
-//        CModelCreator model = new CModelCreator(); 
-//        Compartment[] test; 
-////        ArrayList<Compartment> newtest= new ArrayList<Compartment>(); 
-//        model.createAllCompartments(a);
-//        model.createAllEdges(a);
-//        //newtest = model.getAllCompartments();
-////        
-//////        for(int i = 0; i < newtest.size(); i++){
-//////            newtest.get(i).init(0.7, 0.345, 1.23442);
-//////            int id = newtest.get(i).getId();
-//////            double restivity = newtest.get(i).getR_L(); 
-//////            double length = newtest.get(i).getLength();
-//////            double radius = newtest.get(i).getRadius(); 
-//////            System.out.print("-------------------------------------------------------------------\n");
-//////            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
-//////            System.out.print("-------------------------------------------------------------------");
-//////            System.out.print("\n");
-//////            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+restivity+"\n " );
-//////            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
-//////            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
-//////        }
-////
-////        
-////       // model.setProperties(0.7, 0.345, 1.23442);
-//        test = model.getAllCompartments();
-//        
-//        double k = 0.23456; 
-//        for(int i = 0; i<n; i++){
-//            test[i].init(k+i*5, 0.345, k-i*2);
-//            int id = test[i].getId();
-//            double r_L = test[i].getR_L(); 
-//            double length = test[i].getLength();
-//            double radius = test[i].getRadius();
-//            System.out.print("\n");
-//            System.out.print("Intracellular resistivity of Compartment["+i+"]:"+r_L+"\n " );
-//            System.out.print("Length of Compartment["+i+"]:"+length+"\n " );
-//            System.out.print("Radius of Compartment["+i+"]:"+radius+"\n " );
-//            System.out.print("-------------------------------------------------------------------\n");
-//            System.out.print("ID of Compartment["+i+"]:"+id+"\n " );
-//            System.out.print("\n");
-//            System.out.print("-------------------------------------------------------------------");
-//        }
+         a.deleteEntry(3,2);
+        
+         for(int i = 0; i<n; i++){
+            for(int j = 0; j < n; j++){
+                
+//                System.out.print(a+" ");
+              System.out.print(a.getEntry(i, j) +" ");
+            }
+            System.out.print("\n");
+        }
+         
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Create Model using the connectivity matrix (USING the CModelCreator)
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+         
+        CModelCreator model = new CModelCreator();
+        model.setCmat(a);
+        model.createAllCompartments();
+     
+        Compartment[] c = model.getAllCompartments();
+        
+        
+        for(int i = 0; i< c.length; i++){
+            c[i].init(4, 2, 3);
+        }
+        
+         for(int i = 0; i< c.length; i++){
+            double rl = c[i].getR_L();
+            double len = c[i].getLength(); 
+            double rad = c[i].getRadius(); 
+            System.out.println();
+            System.out.print("resistivity ="+rl+" \n");
+            System.out.print("length ="+len+" \n");
+            System.out.print("radius ="+rad+" \n");
+            System.out.println();
+        }
+   
+        
+        model.createAllEdges();
+        
+        ArrayList<Edge> ed = model.getAllEdges();
+        System.out.println("----------------------------------"); 
+        System.out.println("Number of edges: "+ed.size());
+        for (int i = 0; i<ed.size(); i++){
+            
+            Edge tmp = ed.get(i);
+            Compartment one = tmp.first(); 
+            Compartment two = tmp.second(); 
+            int id1 = one.getId(); 
+            int id2 = two.getId(); 
+            System.out.println("Comp[1]: "+id1+" ---- Comp[2]: "+id2+"  " );
+            
+        }
+        
+        for(int i = 0; i < c.length; i++){
 
+            int id = c[i].getId(); 
+            System.out.println("Compartment["+i+"] = "+id);
+        }
+        //NOTE: the Function compartmentalParameters() can only be called after createAllCompartments() AND createAllEdges()
+        model.compartmentalParameters();
+        
+
+        
+        for(int i = 0; i<c.length; i++){
+            double[] g = c[i].getG();
+            
+            for(int k = 0; k< g.length; k++){
+
+                System.out.print("Conductance: "+g[k]+" \n");
+            }
+            System.out.println();
+        }
+        
+         
+ 
+        
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Create the linear system and calculate matrix A of the LS 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+        LSCreator linsys =  new LSCreator(); 
+        VFunction2D vfun = new VFunction2D(); 
+   
+        MCVFunction mcfun = new MCVFunction(); 
+        double [][] mata = linsys.copyMatrix(a);
+         
+        for(int i = 0; i<c.length; i++){
+            double[] g = c[i].getG();
+            vfun.init(0.36, -77.00, 1.2, 50.00, 0.003, -54.387, 0.01);
+            linsys.setVf(vfun); 
+            mcfun.seteK(vfun.geteK());
+            mcfun.seteL(vfun.geteL());
+            mcfun.seteNa(vfun.geteNa());
+            mcfun.setgK(vfun.getgBarK());
+            mcfun.setgL(vfun.getgBarL());
+            mcfun.setgNa(vfun.getgBarNa());
+            mcfun.setA_u(2);
+            mcfun.setCm(vfun.getCm());
+            mcfun.setIe(0.89);
+            mcfun.setZ(1.0001);
+            mcfun.setTimestep(1.0001);
+            linsys.setMcvf(mcfun);
+            linsys.setH(12);
+            linsys.setM(2); 
+            linsys.setN(4); 
+            mata = linsys.calculateEntriesOfA(c); 
+            System.out.println();
+        }
+   
+       
+        
+         System.out.println();
+        System.out.println("This is the matrix with the new values: ");
+        System.out.println();
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                
+
+              System.out.print(mata[i][j] +" ");
+            }
+            System.out.print("\n");
+        }
+
+ //NOTE: bis hier hin scheinen die Tests erfolgreich zu sein!! 
+        
+        
+//         System.out.println("##################################"); 
         /* TODO: For further testing: 
          *      1. Teste, ob die Edges so funktionieren wie sie sollen
          *      3. erstelle die Dependencies Liste!  
          *      2. berechne die Conductances mit den Compartments/mit einem einzelnen Compartment 
          *      
          */
-        
-//        //Compartment TEST
-//         int complength = 3;
-//        Compartment[] test2 = new Compartment[complength];
-//        System.out.print("Length of this Compartment Array= "+complength+"\n");
-//        for(int i = 0; i < complength; i++){
-//            test2[i] = new Compartment(i);
-//            System.out.print("test2= "+test2[i].getId()+"\n");
-//        }
-////         Compartment comp = new Compartment(3);
-////         System.out.print("Id of single compartment is = "+comp.getId()+"\n");
+
     }    
 }

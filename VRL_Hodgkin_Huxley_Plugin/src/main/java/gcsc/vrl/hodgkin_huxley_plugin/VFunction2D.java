@@ -171,6 +171,10 @@ public class VFunction2D implements Function2D, Serializable{
     public double geteL() {
         return eL;
     }
+
+    public double getCm() {
+        return cm;
+    }
     
     
     /**

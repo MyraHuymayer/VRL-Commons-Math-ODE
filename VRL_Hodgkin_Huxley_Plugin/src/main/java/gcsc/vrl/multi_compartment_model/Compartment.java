@@ -149,15 +149,19 @@ public class Compartment {
     public void calculateConductance(){
         
         number = dependencies.size(); //determine the number of neighbors of this compartment
+        System.out.print("size of the dependencies list = "+number+" \n");
         g = new double[number]; //the number of neighbours determines the array length
-        
+//        System.out.print("###########################################################################################\n");
         //calculate intercompartmental conductance for each neighboring compartment 
         // g_(u,u') = (a_u * a_u')/(r_L * L_u * (L_u*(a_u')^2 + L_u'*(a_u)^2 ))
         for(int i=0; i < number; i++){
+            
             double numerator = radius * Math.pow(dependencies.get(i).getRadius(), 2);
             double denominator = r_L * length * (length * Math.pow(dependencies.get(i).getRadius(), 2) + dependencies.get(i).getLength() * Math.pow(radius, 2) );
             g[i] = numerator/denominator; 
+            System.out.print("g["+i+"] = "+g[i] + " \n");
         }
+        System.out.print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     }
 
 

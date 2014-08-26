@@ -50,7 +50,7 @@ public class MCVFunction {
     /**
      * membrane conductance [in uF/mm^2]
      */
-    private final double cm = 1.0;
+    private double cm;
 
     private double timestep;
     private double z; 
@@ -161,7 +161,10 @@ public class MCVFunction {
         this.z = z;
     }
 
-   
+    public void setCm(double cm) {
+        this.cm = cm;
+    }
+    
     
     
     /*
@@ -193,9 +196,10 @@ public class MCVFunction {
     //Da sind auch generell noch Fehler drin!
     /**
      * Calculate a_(uu'): a_uu' = 1/cm * sum(g_uu'* z Del t)
-     * @param k index value of g[]
+     * @param k index value of g[] 
      * @return value a_uu' which is written into matrix A at [i][j]
      */
+    // welchen Wert nimmt k an? 
     public double calculateAij(int k){
         
         double a_ij = z*timestep*g[k]/cm; 

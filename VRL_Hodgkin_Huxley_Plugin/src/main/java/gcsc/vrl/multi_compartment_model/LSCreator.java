@@ -7,11 +7,22 @@ import gcsc.vrl.hodgkin_huxley_plugin.*;
  */
 public class LSCreator {
     
-    double[][] matrixA; 
-    double n; 
-    double m;
-    double h; 
+    private double[][] matrixA; 
+    private double n; 
+    private double m;
+    private double h; 
+    private VFunction2D vf = new VFunction2D();
+    private MCVFunction mcvf = new MCVFunction();
 
+    public VFunction2D getVf() {
+        return vf;
+    }
+
+    public MCVFunction getMcvf() {
+        return mcvf;
+    }
+
+    
     public double getN() {
         return n;
     }
@@ -35,6 +46,15 @@ public class LSCreator {
     public void setH(double h) {
         this.h = h;
     }
+
+    public void setVf(VFunction2D vf) {
+        this.vf = vf;
+    }
+
+    public void setMcvf(MCVFunction mcvf) {
+        this.mcvf = mcvf;
+    }
+    
     
     
     
@@ -44,7 +64,7 @@ public class LSCreator {
      * make a copy (matrixA) of the connectivity matrix 
      * @param cmat connectivity matrix
      */
-    public void copyMatrix(ConnectivityMatrix cmat){
+    public double[][] copyMatrix(ConnectivityMatrix cmat){
         
         matrixA = new double[cmat.getNodes()][cmat.getNodes()];
        
@@ -53,17 +73,18 @@ public class LSCreator {
                 matrixA[i][j] = cmat.getEntry(i, j);
             }
         }
+        return matrixA; 
+
     } 
     
     
     /**
      * The entries of the matrix are calculated using the methods calculateAij and calculateBi of the MCVFunction 
+     * @param allcomp List of all compartments 
      * @return the matrix A for the linear system  
      */
     public double[][] calculateEntriesOfA(Compartment[] allcomp){
-        MCVFunction mcvf = new MCVFunction();
-        VFunction2D vf = new VFunction2D();
-       
+     
        // NFunction2D nf = new NFunction2D();
        // MFunction2D mf = new MFunction2D();
        // HFunction2D hf = new HFunction2D();

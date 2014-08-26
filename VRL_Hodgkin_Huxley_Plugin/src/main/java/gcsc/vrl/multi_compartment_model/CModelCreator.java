@@ -16,33 +16,28 @@ public class CModelCreator {
     /**
      * the total number of compartments in the model 
      */
-    private int totalNumber;  
+//    private int totalNumber;  
     //private ArrayList<Compartment> allCompartments = new ArrayList<Compartment>(); 
     private Compartment[] allCompartments;
     private ArrayList<Edge> allEdges = new ArrayList<Edge>(); 
-    ConnectivityMatrix cmat; 
+    private ConnectivityMatrix cmat; 
+    private int totalNumber; 
     
     /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     public void setCmat(ConnectivityMatrix cmat) {
         this.cmat = cmat;
+        totalNumber = cmat.getNodes();
+        
     }
 
     public ConnectivityMatrix getCmat() {
         return cmat;
     }
     
-        
-    public void setTotalNumber(){
-        totalNumber = cmat.getNodes();
-    }
-    
-    public int getTotalNumber(){
-        return totalNumber; 
-    }
     
     public void createAllCompartments(){ 
-        //totalNumber = cmat.getNodes();
+//        int totalNumber = cmat.getNodes();
         allCompartments = new Compartment[totalNumber]; 
         
         for(int i = 0; i<totalNumber; i++){
@@ -54,24 +49,8 @@ public class CModelCreator {
         }
     }
     
-//     public void createAllCompartments(ConnectivityMatrix cmat){ 
-//        totalNumber = cmat.getNodes();
-////        allCompartments = new Compartment[totalNumber]; 
-//        Compartment tmp; 
-//        for(int i = 0; i<totalNumber; i++){
-//            for(int j = 0; j< totalNumber; j++){
-//                if(i == j){
-//                    tmp = new Compartment(i); 
-//                    allCompartments.add(tmp);                     
-//                }
-//            }
-//        }
-//     }
-//     
+ 
      
-//    public ArrayList<Compartment> getAllCompartments(){
-//        return allCompartments; 
-//    }
     public Compartment[] getAllCompartments(){
         return allCompartments; 
     }
@@ -82,17 +61,19 @@ public class CModelCreator {
      */
     //TODO: throw Exeption if AllCompartments is empty??
     public void createAllEdges(){
-        //totalNumber = cmat.getNodes();
-        Edge tmp = new Edge();
+//        int totalNumber = cmat.getNodes();
+        
         for(int i = 0; i< totalNumber; i++){
             for(int j = 0; j<totalNumber; j++){
                 if(cmat.getEntry(i, j) == 1 && i != j){
+                    Edge tmp = new Edge();
                     tmp.setFirst(allCompartments[i]);
                     tmp.setSecond(allCompartments[j]); 
+                    allEdges.add(tmp);
                 }
             }
         }
-        allEdges.add(tmp);
+        
     }
     
     public ArrayList<Edge> getAllEdges() {
@@ -100,26 +81,35 @@ public class CModelCreator {
     }
     
     /**
-     * sets the dependencies between all compartments 
+     * sets the dependencies between all compartments and determines the conductances 
      */
     public void compartmentalParameters(){
+//        int totalNumber = cmat.getNodes();
         for(int i = 0; i< totalNumber; i++){
             for(int j = 0; j < allEdges.size(); j++){
                 allCompartments[i].link(allEdges.get(j));
             }
         }
+       
         
         for(int i = 0; i < totalNumber; i++){
-            allCompartments[i].calculateConductance();
+            allCompartments[i].calculateConductance(); // damit wir das so ausfuehren koennen, brauchen wir den Radius, die Laenge und auch die intracellular resistivity, sollte fuer jedes einzelne Comparment gesetzt werden - eventuell auch hier in dieser Klasse 
         }
         
     }
+    
+//    TODO: hier muessen die Werte der Compartments gesetzt werden  -- das sollte ich mittels ueberladen von Methoden realisieren: z.B. 
+//    1.  area, length und radius sind fuer alle Compartments gleich: public void setCompartmentParameters(double length, double r_l, double radius)
+//    2. unterschiedliche Compartments haben unterschiedliche Parameter: public void setCompartmentParameters(double ... /*Wie das hier drin realisiert wird, weiss ich noch nicht */)
+    
+    
 //    Ziemlich Nutzlos, da wir in COmpartment.java die Methode init() haben
-//    public void setProperties(double length, double rl, double radius){
-//        for(int i =0; i<totalNumber; i++){
-//            allCompartments[i].init(length, radius, rl);
-//        }
-//    }
+    public void setProperties(double length, double rl, double radius){
+//        int totalNumber = cmat.getNodes(); // evtl macht es doch sinn totalNumber als festen Wert zu haben
+        for(int i =0; i<totalNumber; i++){
+            allCompartments[i].init(length, radius, rl);
+        }
+    }
    
 
 }
