@@ -134,7 +134,7 @@ public class Main {
             linsys.setH(12);
             linsys.setM(2); 
             linsys.setN(4); 
-            mata = linsys.calculateEntriesOfA(c); 
+            mata = linsys.determineMatrix(c); 
             System.out.println();
         }
    

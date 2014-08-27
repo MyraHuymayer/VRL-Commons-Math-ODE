@@ -192,14 +192,12 @@ public class MCVFunction {
         return 1-b_u;
     }
     
-    //TODO: die richtige Reihenfolge der Leitfaehigkeiten muss sichergestellt werden!!! 
-    //Da sind auch generell noch Fehler drin!
+    //richtige Reihenfolge der Leitfaehigkeiten sichergestellt? Fuer uns minimalbeispiel stimmt die Reihenfolge auf jeden Fall schon mal 
     /**
      * Calculate a_(uu'): a_uu' = 1/cm * sum(g_uu'* z Del t)
      * @param k index value of g[] 
      * @return value a_uu' which is written into matrix A at [i][j]
      */
-    // welchen Wert nimmt k an? 
     public double calculateAij(int k){
         
         double a_ij = z*timestep*g[k]/cm; 
@@ -213,7 +211,7 @@ public class MCVFunction {
      * @return 
      */
     //d_u = 1/cm * (g_Na*E_Na + g_K*E_K + g_L*E_L + i_e/a_u + sum(g_uu' * V_u'(t)) + (g_Na + g_K + g_L + sum(g_uu'))* V_u(t)) * del t
-    public double calculateDi(double[] currentVoltageNeighbor, double currentVoltageComp){
+    public double calculateDi(double[] currentVoltageNeighbor, double currentVoltageComp){//double[] currentVoltageNeighbor, double current VoltageComp muessten wir durch unser HHPlugin ermitteln, oder?
         //g_Na*E_Na + g_K*E_K + g_L*E_L + i_e/a_u
         double hhge = gNa * eNa + gK * eK + gL*eL + ie/a_u;
         //Die Logik dahinter stimmt so noch nicht !!

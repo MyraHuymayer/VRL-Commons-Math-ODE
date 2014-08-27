@@ -83,7 +83,7 @@ public class LSCreator {
      * @param allcomp List of all compartments 
      * @return the matrix A for the linear system  
      */
-    public double[][] calculateEntriesOfA(Compartment[] allcomp){
+    public double[][] determineMatrix(Compartment[] allcomp){
      
        // NFunction2D nf = new NFunction2D();
        // MFunction2D mf = new MFunction2D();
@@ -93,9 +93,9 @@ public class LSCreator {
        mcvf.setgK(vf.getgBarK()*Math.pow(n, 4));
        
        //gL = gBarL
-       mcvf.setgL(vf.getgBarL());
+       mcvf.setgL(vf.getgBarL()); //genau die gleichen Variablen brauchen wir auch in rightHandSide() - NOTE: MAN SOLLTE AUCH BEDENKEN: EVTL UNTERSCHEIDEN SICH DIE VOLTAGES FUER DIE UNTERSCHIEDLICHEN COMPARTMENTS VONEINANDER 
        
-       double aijValue; 
+//       double aijValue; 
        
         
         for(int i = 0; i < matrixA.length; i++){
@@ -121,6 +121,15 @@ public class LSCreator {
         }
         
         return matrixA;
+    }
+    
+    public double[] rightHandSide(double time){
+        double[] rhs = new double[matrixA.length]; 
+        IFunction ifun = new IFunction(); 
+        mcvf.setIe(ifun.calculateI(time));//??
+        //
+        
+        return rhs; 
     }
     
 }
