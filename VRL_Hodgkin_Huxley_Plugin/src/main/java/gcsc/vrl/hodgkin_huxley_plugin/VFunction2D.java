@@ -179,9 +179,9 @@ public class VFunction2D implements Function2D, Serializable{
     
     /**
      * running the function
-     * @param x
-     * @param y
-     * @return 
+     * @param x time 
+     * @param y voltage 
+     * @return the calculated voltage for the current time step
      */
     @MethodInfo(name="run", noGUI=true)
     @Override

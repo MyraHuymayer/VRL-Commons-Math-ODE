@@ -8,6 +8,7 @@ import gcsc.vrl.hodgkin_huxley_plugin.*;
 public class LSCreator {
     
     private double[][] matrixA; 
+    double [] rhs;
     private double n; 
     private double m;
     private double h; 
@@ -55,9 +56,9 @@ public class LSCreator {
         this.mcvf = mcvf;
     }
     
-    
-    
-    
+    public double[] getRhs(){
+        return rhs; 
+    }
     
     //TODO: eventuell kann man die beiden Funktionen auch mergen
     /**
@@ -77,7 +78,7 @@ public class LSCreator {
 
     } 
     
-    
+    //NOTE: Die Matrix wird uebergeben, die rechte Seite nicht -- die muss explizit im LinearSystemSolver nochmal aufgerufen werden --> die bekommt also auch keine GUI
     /**
      * The entries of the matrix are calculated using the methods calculateAij and calculateBi of the MCVFunction 
      * @param allcomp List of all compartments 
@@ -93,10 +94,9 @@ public class LSCreator {
        mcvf.setgK(vf.getgBarK()*Math.pow(n, 4));
        
        //gL = gBarL
-       mcvf.setgL(vf.getgBarL()); //genau die gleichen Variablen brauchen wir auch in rightHandSide() - NOTE: MAN SOLLTE AUCH BEDENKEN: EVTL UNTERSCHEIDEN SICH DIE VOLTAGES FUER DIE UNTERSCHIEDLICHEN COMPARTMENTS VONEINANDER 
-       
-//       double aijValue; 
-       
+       //NOTE: MAN SOLLTE AUCH BEDENKEN: EVTL UNTERSCHEIDEN SICH DIE VOLTAGES FUER DIE UNTERSCHIEDLICHEN COMPARTMENTS VONEINANDER 
+       mcvf.setgL(vf.getgBarL()); //genau die gleichen Variablen brauchen wir auch in rightHandSide() - 
+      
         
         for(int i = 0; i < matrixA.length; i++){
             for(int j = 0; j < matrixA.length; j++ ){
@@ -123,13 +123,37 @@ public class LSCreator {
         return matrixA;
     }
     
-    public double[] rightHandSide(double time){
-        double[] rhs = new double[matrixA.length]; 
-        IFunction ifun = new IFunction(); 
-        mcvf.setIe(ifun.calculateI(time));//??
-        //
+    /**
+     * Calculates the vector on the right hand side of the linear system 
+     * @param t the actual time
+     * @param voltageNeighbor the voltages of the neighboring compartments
+     * @param voltageComp the voltage of the compartment currently analysed
+     * @param area the area upon which the external current acts in [mm^2]
+     */
+    public void rightHandSide(/*double t,*/ double[] voltageNeighbor, double voltageComp, double area, int i){ 
+        rhs = new double[matrixA.length]; 
+        System.out.print("Matrix length = "+matrixA.length+" \n");
+      
+//        IFunction ifun = new IFunction(); 
+//        vf.setI(ifun.calculateI(t));
+//        mcvf.setIe(vf.getI()); //Im Prinzip geht es nur um EIN compartment, da wohl nur ein Compartment dem externen Strom ausgesetzt sein wird -- TODO: Es ist noch noetig das Ausweahlen einzelner Compartments zu implementieren. 
+//        mcvf.setArea_u(area);
         
-        return rhs; 
+        mcvf.setgNa(vf.getgBarNa()*Math.pow(m, 3)*h);
+        System.out.print("Sodium conductance = "+mcvf.getgNa()+" \n");
+        
+        mcvf.setgK(vf.getgBarK()*Math.pow(n, 4));
+        System.out.print("Potassium conductance = "+mcvf.getgK()+" \n");
+        
+        mcvf.setgL(vf.getgBarL());
+        System.out.print("Leakage conductance = "+mcvf.getgL()+" \n");
+        
+        System.out.println("length of the neighbor-voltages-array: "+voltageNeighbor.length+" ");
+//        for(int i = 0; i < rhs.length; i++ ){
+            
+        rhs[i] = mcvf.calculateDi(voltageNeighbor, voltageComp); //macht das so sinn??
+//        }
+
     }
     
 }

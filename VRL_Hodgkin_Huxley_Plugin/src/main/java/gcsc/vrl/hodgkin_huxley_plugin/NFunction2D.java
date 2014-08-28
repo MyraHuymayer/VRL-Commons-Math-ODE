@@ -83,10 +83,10 @@ public class NFunction2D implements Function2D{
     }
     
     /**
-     * Running the function
-     * @param x
-     * @param y
-     * @return 
+     * Running the function: dn/dt = (n_infinity - n)/tau_n
+     * @param x time 
+     * @param y gating propability
+     * @return the gating propability at time x 
      */
    @Override 
    public Double run(Double x, Double y){

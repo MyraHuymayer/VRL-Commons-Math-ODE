@@ -52,7 +52,9 @@ public class Compartment {
      */
     private double[] g; 
     
-
+    private double[] neighborVoltages;
+    
+    private double present_voltage; 
     
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     /** 
@@ -104,6 +106,14 @@ public class Compartment {
     public void setR_L(double r_L) {
         this.r_L = r_L;
     }
+
+    public double getPresent_Voltage() {
+        return present_voltage;
+    }
+
+    public void setPresent_Voltage(double present_voltage) {
+        this.present_voltage = present_voltage;
+    }
     
     
     public void init(double length, double radius, double r_L){
@@ -124,6 +134,10 @@ public class Compartment {
 
     public double[] getG() {
         return g;
+    }
+
+    public double[] getNeighborVoltages() {
+        return neighborVoltages;
     }
  
     
@@ -164,6 +178,17 @@ public class Compartment {
         System.out.print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     }
 
-
+    /**
+     * The voltages from the neighboring compartments estimated for a given time-step is written to an array 
+     * @return array of neighboring voltages
+     */
+    public void obtainNeighborVoltages(){
+        number = dependencies.size(); 
+        neighborVoltages = new double[number]; 
+        
+        for(int i =0; i < number; i++){
+            neighborVoltages[i] = dependencies.get(i).getPresent_Voltage(); 
+        }
+    }
     
 }

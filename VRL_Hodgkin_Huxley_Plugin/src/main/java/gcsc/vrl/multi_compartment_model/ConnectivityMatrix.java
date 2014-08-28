@@ -37,8 +37,8 @@ public class ConnectivityMatrix {
     
     /**
      * An entry of 1.0 is added to the connectivity matrix.
-     * @param i node 1
-     * @param j node 2
+     * @param i line
+     * @param j column
      */
     public void addEntry(int i, int j){
         if(i >= 0 && i < nodes && j >= 0 && j< nodes){
@@ -54,10 +54,9 @@ public class ConnectivityMatrix {
     
     /**
      * If a wrong entry was added, it can be deleted with this method. 
-     * @param i node 1
-     * @param j node 2
+     * @param i line 
+     * @param j column
      */
-    //eventuell brauchen wir diese Methode gar nicht 
     public void deleteEntry(int i, int j){
         if(i >= 0 && i < nodes && j >= 0 && j< nodes){
             connectivityMatrix[i][j] = 0.0; 
@@ -74,14 +73,6 @@ public class ConnectivityMatrix {
         
         return connectivityMatrix[i][j];
     }
-    
-    
-//    public double isEntry(int i, int j){
-//        if(i>=0 && i< nodes && j >= 0 && j < nodes){
-//            return connectivityMatrix[i][j];
-//        }else{
-//            return 0.0; 
-//        }
-//    }
+
     
 }
