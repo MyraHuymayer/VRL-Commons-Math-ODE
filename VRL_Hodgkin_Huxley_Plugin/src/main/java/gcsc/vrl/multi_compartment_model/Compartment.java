@@ -56,6 +56,8 @@ public class Compartment {
     
     private double present_voltage; 
     
+    private int type; 
+    
     /*--------------------------------------------------------------------------------------------------------------------------------------*/
     /** 
      * Constructor, creates a compartment with an identity number and contains a counter for created compartments
@@ -122,6 +124,38 @@ public class Compartment {
         this.r_L = r_L;
     }
     
+    /**
+     * distinguish between soma (encoded with 1), axon (encoded with 2), basal dendrites (encoded with 3) and apical dendrites (encoded with 4); 
+     * if no type is set it is considered undefined and will be set 0
+     * @param type an integer encoding the type of the compartment - codes are equal to those in SWC files 
+     */
+    public void setType(int type){
+        //type-code may not be bigger than 5 or smaller than 0; 
+        if(type > 4 || type < 1){
+            System.err.println("The type must be a value between 1 and 4");
+            this.type = 0;
+        }else {    
+            this.type = type;
+        } 
+    }
+
+    public int getType() {
+        return type;
+    }
+    
+    public String getTypeDescription(){
+        if(type == 1){
+            return "Type = soma"; 
+        }else if(type == 2 ){
+            return "Type = axon";
+        }else if(type == 3){
+            return "Type = basal dendrite";
+        }else if(type == 4){
+            return "Type = apical dendrite";
+        }else{
+            return "Type = undefined";
+        }
+    }
     /*-----------------------------*/
 
     public ArrayList<Compartment> getDependencies() {

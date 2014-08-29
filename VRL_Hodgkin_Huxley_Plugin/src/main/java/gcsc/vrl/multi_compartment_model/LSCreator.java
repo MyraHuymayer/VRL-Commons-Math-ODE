@@ -106,7 +106,7 @@ public class LSCreator {
                 if(i==j){
                      
                     matrixA[i][j] =  mcvf.calculateBi();
-                }//TODO: nochmal anschauen, was bei der berechnung von aij hier passiert - nicht sicher ob das so stimmt.
+                }
                 if(matrixA[i][j] == 1 && i != j){
                     for(int k = 0; k < mcvf.getG().length; k ++){
                         
@@ -125,34 +125,47 @@ public class LSCreator {
     
     /**
      * Calculates the vector on the right hand side of the linear system 
-     * @param t the actual time
-     * @param voltageNeighbor the voltages of the neighboring compartments
-     * @param voltageComp the voltage of the compartment currently analysed
+     * @param compList the list of compartments that is investigated 
      * @param area the area upon which the external current acts in [mm^2]
      */
-    public void rightHandSide(/*double t,*/ double[] voltageNeighbor, double voltageComp, double area, int i){ 
-        rhs = new double[matrixA.length]; 
+    public void rightHandSide(/*double t,*/ Compartment[] allcomp, double area){ //double[] voltageNeighbor, double voltageComp,
+        
+        rhs = new double[allcomp.length];
+        
+        
+        
         System.out.print("Matrix length = "+matrixA.length+" \n");
       
 //        IFunction ifun = new IFunction(); 
 //        vf.setI(ifun.calculateI(t));
 //        mcvf.setIe(vf.getI()); //Im Prinzip geht es nur um EIN compartment, da wohl nur ein Compartment dem externen Strom ausgesetzt sein wird -- TODO: Es ist noch noetig das Ausweahlen einzelner Compartments zu implementieren. 
 //        mcvf.setArea_u(area);
-        
-        mcvf.setgNa(vf.getgBarNa()*Math.pow(m, 3)*h);
-        System.out.print("Sodium conductance = "+mcvf.getgNa()+" \n");
-        
-        mcvf.setgK(vf.getgBarK()*Math.pow(n, 4));
-        System.out.print("Potassium conductance = "+mcvf.getgK()+" \n");
-        
-        mcvf.setgL(vf.getgBarL());
-        System.out.print("Leakage conductance = "+mcvf.getgL()+" \n");
-        
-        System.out.println("length of the neighbor-voltages-array: "+voltageNeighbor.length+" ");
-//        for(int i = 0; i < rhs.length; i++ ){
+        for(int i = 0; i < allcomp.length; i++){
             
-        rhs[i] = mcvf.calculateDi(voltageNeighbor, voltageComp); //macht das so sinn??
-//        }
+            double[] voltageNeighbors;
+            double voltageComp;
+            
+            mcvf.setgNa(vf.getgBarNa()*Math.pow(m, 3)*h);
+            System.out.print("Sodium conductance = "+mcvf.getgNa()+" \n");
+
+            mcvf.setgK(vf.getgBarK()*Math.pow(n, 4));
+            System.out.print("Potassium conductance = "+mcvf.getgK()+" \n");
+
+            mcvf.setgL(vf.getgBarL());
+            System.out.print("Leakage conductance = "+mcvf.getgL()+" \n");
+            
+            //Setze fuer die einzelnen Compartments deren Spannung und die Spannungen der Nachbar-Compartments  
+            allcomp[i].obtainNeighborVoltages(); 
+            voltageNeighbors = allcomp[i].getNeighborVoltages(); 
+            voltageComp = allcomp[i].getPresent_Voltage(); 
+            
+            System.out.println("length of the neighbor-voltages-array: "+voltageNeighbors.length+" ");
+            
+
+                
+            rhs[i] = mcvf.calculateDi(voltageNeighbors, voltageComp); 
+
+        }
 
     }
     

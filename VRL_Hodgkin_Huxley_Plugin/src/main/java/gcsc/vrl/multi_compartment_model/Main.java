@@ -7,7 +7,6 @@ import java.util.*;
  */
 public class Main {
     
-    @SuppressWarnings("empty-statement")
     public static void main(String [] args){
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 //         Create the connectivity-Matrix
@@ -20,15 +19,15 @@ public class Main {
         a.addEntry(1,2);
         a.addEntry(1,3);
 
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j < n; j++){
-                
-//                System.out.print(a+" ");
-              System.out.print(a.getEntry(i, j) +" ");
-            }
-            System.out.print("\n");
-        }
-        System.out.println();
+//        for(int i = 0; i<n; i++){
+//            for(int j = 0; j < n; j++){
+//                
+////                System.out.print(a+" ");
+//              System.out.print(a.getEntry(i, j) +" ");
+//            }
+//            System.out.print("\n");
+//        }
+//        System.out.println();
         
          a.deleteEntry(3,2);
         
@@ -55,26 +54,59 @@ public class Main {
         c[1].setPresent_Voltage(2.334);
         c[2].setPresent_Voltage(0.123);
         c[3].setPresent_Voltage(9.00001);
-        double volt; 
+//        double volt; 
         double[] neighborVoltages; 
         
+        model.setSomaCompartments(0);
+        model.setBasalDendrites(1);
+        model.setApicalDendrites(2,3);
+        model.createAllEdges();
+        
+        
+//        for(int i = 0; i< c.length; i++){
+//            c[i].init(4, 2, 3);
+//        }
+//        
+//         for(int i = 0; i< c.length; i++){
+//            double rl = c[i].getR_L();
+//            double len = c[i].getLength(); 
+//            double rad = c[i].getRadius(); 
+////            System.out.println();
+////            System.out.print("resistivity ="+rl+" \n");
+////            System.out.print("length ="+len+" \n");
+////            System.out.print("radius ="+rad+" \n");
+////            System.out.println();
+//        }
+         
+        
         for(int i = 0; i< c.length; i++){
-            c[i].init(4, 2, 3);
+            if(c[i].getType() == 1){
+                c[i].init(1, 1, 1);
+            }else if(c[i].getType() == 2){
+                c[i].init(2, 2, 2);
+            }else if(c[i].getType() == 3){
+                c[i].init(3, 3, 3);
+            }else if(c[i].getType() == 4){
+                c[i].init(4, 4, 4);
+            }else{
+                c[i].init(0, 0, 0);
+            }
         }
         
+        c[3].init(5000, 899, 8884);
          for(int i = 0; i< c.length; i++){
             double rl = c[i].getR_L();
             double len = c[i].getLength(); 
             double rad = c[i].getRadius(); 
-//            System.out.println();
-//            System.out.print("resistivity ="+rl+" \n");
-//            System.out.print("length ="+len+" \n");
-//            System.out.print("radius ="+rad+" \n");
-//            System.out.println();
+            System.out.println();
+            System.out.print("Comp["+i+"] resistivity ="+rl+" \n");
+            System.out.print("Comp["+i+"] length ="+len+" \n");
+            System.out.print("Comp["+i+"] radius ="+rad+" \n");
+            System.out.println();
         }
    
-        
-        model.createAllEdges();
+               
+
         
         ArrayList<Edge> ed = model.getAllEdges();
         System.out.println("----------------------------------"); 
@@ -86,9 +118,11 @@ public class Main {
             Compartment two = tmp.second(); 
             int id1 = one.getId(); 
             int id2 = two.getId(); 
-            System.out.println("Comp[1]: "+id1+" ---- Comp[2]: "+id2+"  " );
+            System.out.println("Edge[1]: "+id1+" ---- Edge[2]: "+id2+"  " );
             
         }
+        
+        System.out.println();
         
         for(int i = 0; i < c.length; i++){
 
@@ -96,8 +130,7 @@ public class Main {
             System.out.println("Compartment["+i+"] = "+id);
         }
         //NOTE: the Function compartmentalParameters() can only be called after createAllCompartments() AND createAllEdges()
-        model.compartmentalParameters();
-        
+       model.compartmentalParameters();
 //        for(int i = 0; i < c.length; i++){
 //            volt = c[i].getPresent_Voltage();
 //            System.out.println("Voltage of Compartment ["+i+"] = "+volt+"   ");
@@ -125,12 +158,21 @@ public class Main {
             
             for(int k = 0; k< g.length; k++){
 
-                System.out.print("Conductance: "+g[k]+" \n");
+                System.out.print("Conductance of Compartment["+i+"]: "+g[k]+" \n");
             }
             System.out.println();
         }
+      
+
         
-         
+        
+        
+        
+        for(int i = 0; i<c.length; i++){
+            System.out.print("Compartment["+i+"]: Type number: "+c[i].getType()+", Type Description: "+c[i].getTypeDescription()+"\n");
+            System.out.println("-------------------------------------------------------------------------------------------------------"); 
+        } 
+        System.out.println();
  
         
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +197,7 @@ public class Main {
         
         for(int i = 0; i<c.length; i++){
             double[] g = c[i].getG();
-            volt = c[i].getPresent_Voltage(); 
+//            volt = c[i].getPresent_Voltage(); 
 //            System.out.print("volt "+volt+"\n");
 //            System.out.print("compartment number =  "+i+"\n");
 //            System.out.print("compartment id =  "+c[i].getId()+"\n");
@@ -163,11 +205,11 @@ public class Main {
             c[i].obtainNeighborVoltages();
             neighborVoltages = c[i].getNeighborVoltages();
             
-            System.out.println("_________________________________________");
+//            System.out.println("_________________________________________");
             for(int j = 0; j < neighborVoltages.length; j ++){
                 System.out.println("v["+j+"] = "+neighborVoltages[j]);
             }
-            System.out.println("_________________________________________");
+//            System.out.println("_________________________________________");
 //            double volt = c[i].getPresent_Voltage();
 //            double[] neighborVoltages = c[i].obtainNeighborVoltages();
             
@@ -191,33 +233,36 @@ public class Main {
             linsys.setM(2); 
             linsys.setN(4); 
             mata = linsys.determineMatrix(c); 
-            linsys.rightHandSide(neighborVoltages, volt, mcfun.getArea_u(),i);
-            right_hand_side = linsys.getRhs(); 
+//            linsys.rightHandSide(neighborVoltages, volt, mcfun.getArea_u(),i);
+            
             System.out.println();
             
             
         }
    
+       linsys.rightHandSide(c, mcfun.getArea_u());
+       right_hand_side = linsys.getRhs(); 
        
-        
-         System.out.println();
-        System.out.println("This is the matrix with the new values: ");
-        System.out.println();
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
+       System.out.println();
+       
+       System.out.println("This is the matrix with the new values: ");
+       
+       System.out.println();
+       for(int i = 0; i < n; i++){
+           for(int j = 0; j < n; j++){
                 
 
-              System.out.print(mata[i][j] +" ");
-            }
-            System.out.print("\n");
-        }
+             System.out.print(mata[i][j] +" ");
+           }
+           System.out.print("\n");
+       }
         
-        System.out.println();
-        for(int i = 0; i < n; i++){
-            System.out.print(right_hand_side[i] +" \n");
-        }
-        System.out.println();
-        System.out.println("_________________________________________ END of TEST _________________________________________");
+       System.out.println();
+       for(int i = 0; i < n; i++){
+           System.out.print("d_["+i+"] =  "+right_hand_side[i] +" \n");
+       }
+       System.out.println();
+       System.out.println("_________________________________________ END of TEST _________________________________________");
  //NOTE: bis hier hin scheinen die Tests erfolgreich zu sein!! 
         
         
