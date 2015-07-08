@@ -1,0 +1,7 @@
+/VRL-Commons-Math-ODE/build/
+.gradle
+.DS_Store
+# Ignore Gradle GUI config
+gradle-app.setting
+/VRL-PE_NEURON/.nb-gradle/private/
+.nb_gradle
